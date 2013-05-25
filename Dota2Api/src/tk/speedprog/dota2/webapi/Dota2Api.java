@@ -98,6 +98,15 @@ public class Dota2Api {
 			}
 			e.printStackTrace();
 			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			try {
+				Thread.sleep(60000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			throw (new RetryException("Unknown exception, plz try again!"));
 		}
 
 		return sb.toString();

@@ -67,6 +67,7 @@ public class Dota2Api {
 			if (e instanceof java.net.ConnectException) {
 				try {
 					Thread.sleep(1000);
+					System.out.println("Throwing RetyException");
 					throw new RetryException(
 							"ConnectException: Please try again!");
 				} catch (InterruptedException e1) {
@@ -83,6 +84,7 @@ public class Dota2Api {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				System.out.println("Throwing RetyException");
 				throw (new RetryException("Http Error 503, plz try again!"));
 			} else if (e.getMessage().contains("500")) {
 				System.out.println("Http Response 500, sleeping for 60s.");
@@ -92,6 +94,7 @@ public class Dota2Api {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				System.out.println("Throwing RetyException");
 				throw (new RetryException("Http Error 500, plz try again!"));
 			} else {
 				System.out.println("Exception message: " + e.getMessage());
@@ -106,6 +109,7 @@ public class Dota2Api {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			System.out.println("Throwing RetyException");
 			throw (new RetryException("Unknown exception, plz try again!"));
 		}
 

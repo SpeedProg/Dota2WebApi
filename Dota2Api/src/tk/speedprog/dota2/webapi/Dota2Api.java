@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import javax.xml.parsers.SAXParser;
@@ -44,6 +45,7 @@ public class Dota2Api {
 		try {
 			url = new URL(apiUrl);
 		} catch (MalformedURLException e) {
+			System.out.println(getCurrentTime());
 			url = null;
 			e.printStackTrace();
 		}
@@ -57,9 +59,11 @@ public class Dota2Api {
 					sb.append(line);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
+				System.out.println(getCurrentTime());
 				e.printStackTrace();
 			}
 		} catch (IOException e) {
+			System.out.println(getCurrentTime());
 			if (e instanceof FileNotFoundException) {
 				e.printStackTrace();
 				return null;
@@ -71,7 +75,7 @@ public class Dota2Api {
 					throw new RetryException(
 							"ConnectException: Please try again!");
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
+					System.out.println(getCurrentTime());
 					e1.printStackTrace();
 				}
 
@@ -81,7 +85,7 @@ public class Dota2Api {
 				try {
 					Thread.sleep(60000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
+					System.out.println(getCurrentTime());
 					e1.printStackTrace();
 				}
 				System.out.println("Throwing RetyException");
@@ -91,7 +95,7 @@ public class Dota2Api {
 				try {
 					Thread.sleep(60000);
 				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
+					System.out.println(getCurrentTime());
 					e1.printStackTrace();
 				}
 				System.out.println("Throwing RetyException");
@@ -102,11 +106,12 @@ public class Dota2Api {
 			e.printStackTrace();
 			return null;
 		} catch (Exception e) {
+			System.out.println(getCurrentTime());
 			e.printStackTrace();
 			try {
 				Thread.sleep(60000);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
+				System.out.println(getCurrentTime());
 				e1.printStackTrace();
 			}
 			System.out.println("Throwing RetyException");
@@ -130,7 +135,9 @@ public class Dota2Api {
 				try {
 					return url.openStream();
 				} catch (IOException e) {
+					System.out.println(getCurrentTime());
 					if (e instanceof FileNotFoundException) {
+						System.out.println(getCurrentTime());
 						e.printStackTrace();
 						return null;
 					}
@@ -140,7 +147,7 @@ public class Dota2Api {
 							throw new RetryException(
 									"ConnectException: Please try again!");
 						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
+							System.out.println(getCurrentTime());
 							e1.printStackTrace();
 						}
 
@@ -151,7 +158,7 @@ public class Dota2Api {
 						try {
 							Thread.sleep(60000);
 						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
+							System.out.println(getCurrentTime());
 							e1.printStackTrace();
 						}
 						throw (new RetryException(
@@ -162,7 +169,7 @@ public class Dota2Api {
 						try {
 							Thread.sleep(60000);
 						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
+							System.out.println(getCurrentTime());
 							e1.printStackTrace();
 						}
 						throw (new RetryException(
@@ -234,8 +241,8 @@ public class Dota2Api {
 			saxParser
 					.parse(new InputSource(new StringReader(content)), mhbsnxh);
 			return mhbsnxh.getMatchDetails();
-		} else {
 		}
+		System.out.println("No Content");
 		return null;
 	}
 
@@ -249,6 +256,8 @@ public class Dota2Api {
 					+ apiKey + API_MATCH_ID_PREFIX + matchId,
 					matchDetailsXMLHandler);
 		} catch (SAXException se) {
+			System.out.println(getCurrentTime());
+			se.printStackTrace();
 			return null;
 		}
 		return matchDetailsXMLHandler.getMatchDetails();
@@ -306,10 +315,10 @@ public class Dota2Api {
 			saxParser.parse(stream, psxh);
 			return psxh.data;
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
+			System.out.println(getCurrentTime());
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println(getCurrentTime());
 			e.printStackTrace();
 		}
 		return null;
@@ -321,5 +330,13 @@ public class Dota2Api {
 		BigInteger biStreamId64 = biSteamId32.add(new BigInteger(
 				"76561197960265728"));
 		return biStreamId64.toString();
+	}
+	
+	public static String getCurrentTime() {
+		Calendar cal = Calendar.getInstance();
+		return cal.get(Calendar.YEAR) + "." + cal.get(Calendar.MONTH) + "."
+				+ cal.get(Calendar.DAY_OF_MONTH) + " "
+				+ cal.get(Calendar.HOUR_OF_DAY) + ":"
+				+ cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND);
 	}
 }

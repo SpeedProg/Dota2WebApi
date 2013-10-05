@@ -269,12 +269,12 @@ public class Dota2Api {
 		MatchHistoryXMLHandler matchHistoryXMLHandler = new MatchHistoryXMLHandler();
 		String request = API_GET_MATCH_HISTORY_PATH + API_KEY_PREFIX + apiKey
 				+ API_ACCOUNTID_PREFIX + steamId;
-		System.out.println("MatchHistoryRequest: " + request);
 		if (fromMatchId != null) {
 			long lastMatchId = Long.parseLong(fromMatchId);
 			request = request + API_START_AT_MATCH_ID_PREFIX
 					+ (lastMatchId + 1);
 		}
+		System.out.println("MatchHistoryRequest: " + request);
 		InputStream apiResultStream = null;
 		boolean gotHttpError;
 		do {
